@@ -1,0 +1,7 @@
+[00:00:02.624] Server  LOG     ✓ Ready in 2s
+[00:00:05.104] Server  ERROR   ⨯ Error: Failed query: select "id", "clerk_id", "minecraft_username", "minecraft_uuid", "verification_code", "is_verified", "email", "created_at", "updated_at", "is_whitelisted", "is_admin" from "users" "users" where "users"."clerk_id" = $1 limit $2
+params: user_38J8o2Z3eOQIBCqIk6AONNXpikR,1
+[00:00:05.589] Browser ERROR   uncaughtError: Error: Failed query: select "id", "clerk_id", "minecraft_username", "minecraft_uuid", "verification_code", "is_verified", "email", "created_at", "updated_at", "is_whitelisted", "is_admin" from "users" "users" where "users"."clerk_id" = $1 limit $2
+params: user_38J8o2Z3eOQIBCqIk6AONNXpikR,1
+[00:00:05.895] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:00:05.895] Browser WARN    Clerk: The prop "afterSignInUrl" is deprecated and should be replaced with the new "fallbackRedirectUrl" or "forceRedirectUrl" props instead. Learn more: https://clerk.com/docs/guides/custom-redirects#redirect-url-props
