@@ -1,45 +1,59 @@
-import {
-  FaCubes,
-  FaGavel,
-  FaUsers,
-  FaDiscord,
-  FaShoppingCart,
-  FaVoteYea,
-} from "react-icons/fa";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { ModeToggle } from "@/components/core/mode-toggle";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import {
+  Gavel,
+  ShoppingCart,
+  Users,
+  Vote,
+} from "lucide-react";
 
-// Explicit type for COMMUNITY_LINKS with allowed Button variant types
 type CommunityLinkVariant = "outline" | "secondary" | "link" | "default" | "destructive" | "ghost";
 
 interface CommunityLink {
   name: string;
   href: string;
-  icon: typeof FaDiscord;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   sr: string;
   variant: CommunityLinkVariant;
 }
 
+const BuildBattleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" {...props}>
+    <rect x="3" y="15" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="2" />
+    <rect x="15" y="15" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="2" />
+    <rect x="9" y="3" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="2" />
+    <path d="M6 15V9m12 6V9M9 9v6m6-6v6" stroke="currentColor" strokeWidth="2" />
+  </svg>
+);
+
+const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" {...props}>
+    <rect width="24" height="24" fill="none" />
+    <path fill="currentColor" d="M20.317 4.369A19.791 19.791 0 0016.885 3c-.2.367-.432.846-.593 1.224a18.542 18.542 0 00-4.585 0c-.16-.378-.389-.857-.588-1.224A19.788 19.788 0 003.684 4.369a20.13 20.13 0 00-3.195 14.751a19.932 19.932 0 006.142 1.922c.471-.638.886-1.311 1.241-2.014c-.677-.194-1.319-.453-1.908-.763a.56.56 0 01-.25-.614a.567.567 0 01.277-.31c.258-.13.523-.262.775-.391a.563.563 0 01.524 0c2.887 1.358 6.005 1.358 8.892 0a.563.563 0 01.524 0c.252.13.517.26.775.391a.563.563 0 01.026.924a7.823 7.823 0 01-1.906.763c.361.703.776 1.376 1.247 2.014a20.137 20.137 0 006.141-1.92a20.128 20.128 0 00-3.196-14.753zM8.02 15.331c-1.185 0-2.153-1.087-2.153-2.42c0-1.333.948-2.42 2.153-2.42c1.207 0 2.167 1.099 2.153 2.437c0 1.317-.947 2.403-2.153 2.403zm7.963 0c-1.186 0-2.153-1.087-2.153-2.42c0-1.333.947-2.42 2.153-2.42c1.209 0 2.167 1.099 2.154 2.437c0 1.317-.947 2.403-2.154 2.403z" />
+  </svg>
+);
+
 const GAME_MODES = [
   {
     name: "CB",
-    title: "CityBuild",
-    icon: FaCubes,
+    title: "BuildBattle",
+    icon: BuildBattleIcon,
     desc: "Create & build in a custom plot-world. Unique farmworld for resources.",
   },
   {
     name: "PvP",
     title: "PvP",
-    icon: FaGavel,
+    icon: Gavel,
     desc: "Battle others in well-balanced PvP arenas. Show your skills & claim rewards.",
   },
   {
     name: "Event",
     title: "Event Server",
-    icon: FaUsers,
+    icon: Users,
     desc: "Join weekly events for fun, glory, and unique in-game prizes.",
   },
 ];
@@ -48,21 +62,21 @@ const COMMUNITY_LINKS: CommunityLink[] = [
   {
     name: "Discord",
     href: "https://discord.gg/", // Replace with actual Discord link
-    icon: FaDiscord,
+    icon: DiscordIcon,
     sr: "Discord Community",
     variant: "outline",
   },
   {
     name: "Store",
     href: "/store", // Replace with actual store link
-    icon: FaShoppingCart,
+    icon: ShoppingCart,
     sr: "Store",
     variant: "secondary",
   },
   {
     name: "Vote",
     href: "/vote", // Replace with actual vote page
-    icon: FaVoteYea,
+    icon: Vote,
     sr: "Vote for rewards",
     variant: "outline",
   },
@@ -78,6 +92,7 @@ function HeroSection() {
       <Button size="lg" className="mt-2" aria-label="Join Now">
         Join Now
       </Button>
+      <ModeToggle />
       <span className="mt-2 text-xs font-mono tracking-widest text-muted-foreground select-all">
         PLAY.VOIDMINE.NET
       </span>
@@ -92,19 +107,22 @@ function GameModesSection() {
         Game Modes
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-        {GAME_MODES.map((mode) => (
-          <Card key={mode.name} className="flex flex-col justify-between min-h-[220px]">
-            <CardHeader className="flex flex-col items-start gap-1 pb-2">
-              <span className="text-muted-foreground">
-                <mode.icon className="h-6 w-6" aria-hidden />
-              </span>
-              <CardTitle className="mt-3 text-lg">{mode.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-base">{mode.desc}</CardDescription>
-            </CardContent>
-          </Card>
-        ))}
+        {GAME_MODES.map((mode) => {
+          const Icon = mode.icon;
+          return (
+            <Card key={mode.name} className="flex flex-col justify-between min-h-[220px]">
+              <CardHeader className="flex flex-col items-start gap-1 pb-2">
+                <span className="text-muted-foreground">
+                  <Icon className="h-6 w-6" aria-hidden />
+                </span>
+                <CardTitle className="mt-3 text-lg">{mode.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base">{mode.desc}</CardDescription>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </section>
   );

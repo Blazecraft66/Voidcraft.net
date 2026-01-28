@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/mateo/Documents/GitHub/aevum_web/src/app/dashboard/page.tsx"],"sourcesContent":["import React from 'react'\r\n\r\nconst DashboardPage = () => {\r\n  return (\r\n    <div>DashboardPage</div>\r\n  )\r\n}\r\n\r\nexport default DashboardPage"],"names":[],"mappings":";;;;;;AAEA,MAAM,gBAAgB;IACpB,qBACE,8OAAC;kBAAI;;;;;;AAET;uCAEe"}}]
-}
